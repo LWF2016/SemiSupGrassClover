@@ -9,7 +9,7 @@ import concurrent.futures
 import torch
 import torchvision
 import time
-from decode_segmap import decode_seg_map_sequence, decode_segmap
+# from decode_segmap import decode_seg_map_sequence, decode_segmap
 
 
 nimages = int(sys.argv[1])
