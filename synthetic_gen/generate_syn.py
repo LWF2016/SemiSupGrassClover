@@ -53,8 +53,11 @@ def generate_syn(back, items, i):
     
     ratio = 0
     d = np.random.dirichlet((9,2,1))
+    print(d)
     o = np.argsort(-d)
+    print(o)
     d = d[o]
+    print(d)
     nel = int(max(d) * nelem)
     for _ in range(nel):
         #Random element (class balanced)
