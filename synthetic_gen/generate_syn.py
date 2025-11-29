@@ -24,10 +24,13 @@ if not os.path.isdir(root):
 backgrounds = os.listdir('backgrounds')
 croped = os.listdir('cropedbit')
 
-clover = [os.path.join('cropedbit', c) for c in croped if 'clover' in c]
+clover = os.listdir('cropedbit/clover')
+clover = [os.path.join('cropedbit/clover', c) for c in clover]
 print(clover)
-grass = [os.path.join('cropedbit', c) for c in croped if 'grass' in c]
-weed = [os.path.join('cropedbit', c) for c in croped if 'weed' in c and c[0] != 'n']
+grass = os.listdir('cropedbit/grass')
+grass = [os.path.join('cropedbit/grass', c) for c in grass]
+weed = os.listdir('cropedbit/weed')
+weed = [os.path.join('cropedbit/weed', c) for c in weed]
 items = [grass, clover, weed]
 back = [os.path.join('backgrounds', b) for b in backgrounds]
 
