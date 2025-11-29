@@ -30,6 +30,25 @@ weed = [os.path.join('cropedbit', c) for c in croped if 'weed' in c and c[0] != 
 items = [grass, clover, weed]
 back = [os.path.join('backgrounds', b) for b in backgrounds]
 
+gaussians = [
+    # 草：3个高斯分布中心
+    [
+        (np.array([0.3, 0.3]) * isize, np.array([[40000, 0], [0, 40000]])),
+        (np.array([0.7, 0.5]) * isize, np.array([[35000, 0], [0, 35000]])),
+        (np.array([0.5, 0.8]) * isize, np.array([[30000, 0], [0, 30000]])),
+    ],
+    # 三叶草：2个高斯分布中心
+    [
+        (np.array([0.4, 0.6]) * isize, np.array([[25000, 0], [0, 25000]])),
+        (np.array([0.6, 0.4]) * isize, np.array([[28000, 0], [0, 28000]])),
+    ],
+    # 杂草：2个高斯分布中心  
+    [
+        (np.array([0.2, 0.7]) * isize, np.array([[20000, 0], [0, 20000]])),
+        (np.array([0.8, 0.3]) * isize, np.array([[22000, 0], [0, 22000]])),
+    ]
+]
+
 print(len(clover), 'Clover')
 print(len(grass), 'Grass')
 print(len(weed), 'Weed')
