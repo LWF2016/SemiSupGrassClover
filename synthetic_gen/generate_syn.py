@@ -25,6 +25,7 @@ backgrounds = os.listdir('backgrounds')
 croped = os.listdir('cropedbit')
 
 clover = [os.path.join('cropedbit', c) for c in croped if 'clover' in c]
+print(clover)
 grass = [os.path.join('cropedbit', c) for c in croped if 'grass' in c]
 weed = [os.path.join('cropedbit', c) for c in croped if 'weed' in c and c[0] != 'n']
 items = [grass, clover, weed]
@@ -72,11 +73,8 @@ def generate_syn(back, items, i):
     
     ratio = 0
     d = np.random.dirichlet((9,2,1))
-    print(d)
     o = np.argsort(-d)
-    print(o)
     d = d[o]
-    print(d)
     nel = int(max(d) * nelem)
     for _ in range(nel):
         #Random element (class balanced)
