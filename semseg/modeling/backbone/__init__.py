@@ -1,11 +1,11 @@
-from .resnet import resnet34, resnet50, resnet101
+from .resnet import ResNet34, ResNet50, ResNet101
 
 def build_backbone(backbone, output_stride, BatchNorm):
-    if backbone == 'resnet34':
-        return resnet34(output_stride=output_stride, BatchNorm=BatchNorm)
+    if backbone == 'resnet34' or backbone == 'resnet':
+        return ResNet34(output_stride=output_stride, BatchNorm=BatchNorm)
     elif backbone == 'resnet50':
-        return resnet50(output_stride=output_stride, BatchNorm=BatchNorm)
+        return ResNet50(output_stride=output_stride, BatchNorm=BatchNorm)
     elif backbone == 'resnet101':
-        return resnet101(output_stride=output_stride,BatchNorm=BatchNorm)
+        return ResNet101(output_stride=output_stride,BatchNorm=BatchNorm)
     else:
         raise NotImplementedError(f"Backbone '{backbone}' not implemented")
