@@ -79,7 +79,7 @@ class Trainer(object):
             if not os.path.isfile(args.resume):
                 raise RuntimeError("=> no checkpoint found at '{}'" .format(args.resume))
             
-            checkpoint = torch.load(args.resume)
+            checkpoint = torch.load(args.resume, weights_only=False)
             state_dict = checkpoint['state_dict']
             self.best_pred = checkpoint['best_pred']
             args.start_epoch = checkpoint['epoch']
