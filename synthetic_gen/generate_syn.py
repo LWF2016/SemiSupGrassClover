@@ -26,7 +26,6 @@ croped = os.listdir('cropedbit')
 
 clover = os.listdir('cropedbit/clover')
 clover = [os.path.join('cropedbit/clover', c) for c in clover]
-print(clover)
 grass = os.listdir('cropedbit/grass')
 grass = [os.path.join('cropedbit/grass', c) for c in grass]
 weed = os.listdir('cropedbit/weed')
