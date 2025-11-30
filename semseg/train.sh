@@ -3,7 +3,7 @@ CUDA_VISIBLE_DEVICES=0,1 python train.py --backbone resnet34 --lr 0.007 --worker
 CUDA_VISIBLE_DEVICES=0,1 python train.py --backbone resnet34 --lr 0.007 --workers 12 --epochs 1 --gpu-ids 0 --eval-interval 1 --dataset irish --batch-size 4 --checkname resnet34irish --base-size 1024 --crop-size 1024 --loss-type ce --use-balanced-weights --resume "/kaggle/working/semseg/run/irish/resnet34irish/checkpoint_best.pth.tar" --predict "/kaggle/input/irish-grass-clover/camera/images"
 mv preds preds_irish_lab
 
-CUDA_VISIBLE_DEVICES=0,1 python train.py --backbone resnet34 --lr 0.007 --workers 12 --epochs 1 --gpu-ids 0 --eval-interval 1 --dataset irish --batch-size 4 --checkname resnet34irish --base-size 1024 --crop-size 1024 --loss-type ce --use-balanced-weights --resume "/kaggle/working/semseg/run/irish/resnet34irish/checkpoint_best.pth.tar" --predict "/kaggle/input/irish-grass-clover/camera_unlab"
+CUDA_VISIBLE_DEVICES=0,1 python train.py --backbone resnet34 --lr 0.007 --workers 12 --epochs 1 --gpu-ids 0 --eval-interval 1 --dataset irish --batch-size 4 --checkname resnet34irish --base-size 1024 --crop-size 1024 --loss-type ce --use-balanced-weights --resume "/kaggle/working/semseg/run/irish/resnet34irish/checkpoint_best.pth.tar" --predict "/kaggle/input/irish-grass-clover/camera/images"
 mv preds preds_irish_unlab
 
 python predictbiomass_irish.py --masks preds_irish_lab --gt ../samples/irish/gt.csv --test preds_irish_unlab
