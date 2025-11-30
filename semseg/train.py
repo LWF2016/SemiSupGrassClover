@@ -134,8 +134,8 @@ class Trainer(object):
             
             train_loss += loss_red.item()
             tbar.set_description('Train loss: {0:.4f}, height loss {1:.4f}'.format(train_loss / (i + 1), loss_height.item()))
-        print('[Epoch: %d, numImages: %5d]' % (epoch, i * self.args.batch_size + image.data.shape[0]))
-        print('Loss: %.3f' % train_loss)
+            print('[Epoch: %d, numImages: %5d]' % (epoch, i * self.args.batch_size + image.data.shape[0]))
+            print('Loss: %.3f' % train_loss)
         
         # save checkpoint every epoch
         is_best = False
