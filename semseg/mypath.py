@@ -4,7 +4,7 @@ class Path(object):
         if dataset == 'danish':
             return '../samples/danish_semseg/'
         elif dataset == 'irish':
-            return '../samples/irish_semseg/'
+            return '../synthetic_images/'
         else:
             print('Dataset {} not available.'.format(dataset))
             raise NotImplementedError
