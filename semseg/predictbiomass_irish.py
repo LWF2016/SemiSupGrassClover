@@ -109,8 +109,8 @@ with open("test.csv", 'w') as f_gt:
                 writer.writerow(row)
 
 
-train = torch.tensor(ra[:tio])
-val = torch.tensor(ra[-2*tio:])
+train = ra[:tio].clone().detach()
+val = ra[-2*tio:].clone().detach()
 print(len(train), len(val))
 
 ratio = 3000
