@@ -23,7 +23,6 @@ if not os.path.isdir(root):
 
 backgrounds = os.listdir('backgrounds')
 croped = os.listdir('cropedbit')
-
 clover = os.listdir('cropedbit/clover')
 clover = [os.path.join('cropedbit/clover', c) for c in clover]
 grass = os.listdir('cropedbit/grass')
