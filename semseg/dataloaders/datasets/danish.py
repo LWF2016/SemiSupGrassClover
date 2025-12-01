@@ -99,8 +99,9 @@ class CloverSegmentation(Dataset):
 
     def _make_img_gt_point_pair(self, index):
         _img = Image.open(self.images[index])
-        _target = Image.open(self.categories[index]).convert('L')
+        _img.draft('RGB',(_img.size[0]//2, _img.size[1]//2))
         
+        _target = np.load(self.categories[index])['arr_0']
         return _img, _target
 
     def transform_tr(self, sample):
