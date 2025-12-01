@@ -45,8 +45,8 @@ class CloverSegmentation(Dataset):
         self.categories = []
         
         for ii, lines in enumerate(lines_im):
-            _image, _gt = os.path.join(self._image_dir, lines), os.path.join(self._gt_dir, lines[:-3]+'png')
-            print(_gt)
+            _image, _gt = os.path.join(self._image_dir, lines), os.path.join(self._gt_dir, 'gt_'+name.replace('jpg', 'npz'))
+
             if os.path.isfile(_image) and os.path.isfile(_gt):
                 self.images.append(_image)
                 self.categories.append(_gt)
@@ -55,10 +55,10 @@ class CloverSegmentation(Dataset):
                 assert os.path.isfile(_gt)
                 
         if split == 'train':
-            self.images = self.images[:800]
+            self.images = self.images[:8]
             self.categories = self.categories[:len(self.images)]
         elif split == 'val':
-            self.images = self.images[:200]
+            self.images = self.images[8:10]
             self.categories = self.categories[:len(self.images)]
             
         #Normalization params
