@@ -42,7 +42,7 @@ class CloverSegmentation(Dataset):
         else:
             raise NotImplementedError
 
-
+        print(self._image_dir)
         lines_im = os.listdir(self._image_dir)
 
         self.images = []
