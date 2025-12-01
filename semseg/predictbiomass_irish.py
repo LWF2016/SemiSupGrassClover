@@ -70,8 +70,6 @@ for i, k in enumerate(keys):
        
 gt = torch.tensor(gt)
 histograms = torch.tensor(histograms)
-print('histograms')
-print(histograms)
 ra = torch.randperm(len(gt_dic.keys()))
 tio = int(.1 * len(ra))
 
