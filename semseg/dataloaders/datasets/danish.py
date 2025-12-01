@@ -28,10 +28,7 @@ class CloverSegmentation(Dataset):
         self._image_dir = self._base_dir
         self._gt_dir = self._base_dir.replace('imageslowres', 'gtlowres')
         self.args = args
-        print(self._base_dir)
-        print(self._image_dir)
-        print(self._gt_dir)
-        print(self.args)
+
         self.unorm = UnNormalize(mean=(0.3612, 0.4310, 0.2176), std=(0.1225, 0.1445, 0.1008))
 
         self.split = split
@@ -42,7 +39,6 @@ class CloverSegmentation(Dataset):
         else:
             raise NotImplementedError
 
-        print(self._image_dir)
         lines_im = os.listdir(self._image_dir)
 
         self.images = []
@@ -50,7 +46,7 @@ class CloverSegmentation(Dataset):
         
         for ii, lines in enumerate(lines_im):
             _image, _gt = os.path.join(self._image_dir, lines), os.path.join(self._gt_dir, lines[:-3]+'png')
-
+            print(_gt)
             if os.path.isfile(_image) and os.path.isfile(_gt):
                 self.images.append(_image)
                 self.categories.append(_gt)
