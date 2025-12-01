@@ -27,9 +27,11 @@ class CloverSegmentation(Dataset):
         self._base_dir = base_dir
         self._image_dir = self._base_dir
         self._gt_dir = self._base_dir.replace('imageslowres', 'gtlowres')
-    
         self.args = args
-
+        print(self._base_dir)
+        print(self._image_dir)
+        print(self._gt_dir)
+        print(self.args)
         self.unorm = UnNormalize(mean=(0.3612, 0.4310, 0.2176), std=(0.1225, 0.1445, 0.1008))
 
         self.split = split
@@ -127,7 +129,7 @@ class CloverSegmentation(Dataset):
         return composed_transforms(sample)
     
     def __str__(self):
-        return 'Irish(split=' + str(self.split) + ')'
+        return 'Danish(split=' + str(self.split) + ')'
 
 
 if __name__ == '__main__':
