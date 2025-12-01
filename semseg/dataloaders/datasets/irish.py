@@ -102,7 +102,7 @@ class CloverSegmentation(Dataset):
         return composed_transforms(sample)
     
     def __str__(self):
-        return 'Clover(split=' + str(self.split) + ')'
+        return 'Irish(split=' + str(self.split) + ')'
 
 
 if __name__ == '__main__':
