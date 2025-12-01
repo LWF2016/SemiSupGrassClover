@@ -45,7 +45,7 @@ class CloverSegmentation(Dataset):
         self.categories = []
         
         for ii, lines in enumerate(lines_im):
-            _image, _gt = os.path.join(self._image_dir, lines), os.path.join(self._gt_dir, 'gt_'+name.replace('jpg', 'npz'))
+            _image, _gt = os.path.join(self._image_dir, lines), os.path.join(self._gt_dir, 'gt_'+lines.replace('jpg', 'npz'))
 
             if os.path.isfile(_image) and os.path.isfile(_gt):
                 self.images.append(_image)
