@@ -9,19 +9,33 @@ def calculate_weigths_labels(dataset, dataloader, num_classes, syn=False):
     # Initialize tqdm
     tqdm_batch = tqdm(dataloader)
     print('Calculating classes weights')
+    
+    skipped_count = 0
     for i, sample in enumerate(tqdm_batch):
-        if syn:
-            y = sample['label'][int(len(sample['label'])/2):]
-        else:
-            y = sample['label']
-        y = y.detach().cpu().numpy()
-        mask = (y >= 0) & (y < num_classes)
-        labels = y[mask].astype(np.uint8)
-        count_l = np.bincount(labels, minlength=num_classes)
-        z += count_l
+        try:
+            if syn:
+                y = sample['label'][int(len(sample['label'])/2):]
+            else:
+                y = sample['label']
+            y = y.detach().cpu().numpy()
+            mask = (y >= 0) & (y < num_classes)
+            labels = y[mask].astype(np.uint8)
+            count_l = np.bincount(labels, minlength=num_classes)
+            z += count_l
+        except Exception as e:
+            # Skip corrupted samples
+            skipped_count += 1
+            print(f"\nWarning: Skipped sample {i} due to error: {str(e)}")
+            continue
+            
         #if i > len(dataloader) / 10:
         #    break
+    
     tqdm_batch.close()
+    
+    if skipped_count > 0:
+        print(f"\nTotal skipped samples: {skipped_count}")
+    
     total_frequency = np.sum(z)
     class_weights = []
     for frequency in z:
