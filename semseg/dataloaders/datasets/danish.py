@@ -7,7 +7,6 @@ from torchvision import transforms
 from dataloaders import custom_transforms as tr
 from utils.visualization import UnNormalize
 from PIL import Image
-import torch
 
 class CloverSegmentation(Dataset):
     """
@@ -95,7 +94,7 @@ class CloverSegmentation(Dataset):
         elif self.split == 'val':
             sample = self.transform_val(sample)
             
-        sample['label'] = torch.argmax(sample['label'], dim=-1)
+        sample['label'] = sample['label'].squeeze(0)
         return sample
 
     def _make_img_gt_point_pair(self, index):
