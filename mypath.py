@@ -1,10 +1,10 @@
 class Path(object):
     @staticmethod
     def db_root_dir(dataset):
-        if dataset == 'clover':
-            return 'samples/clover'
-        elif dataset == 'clover_ext':
-            return 'samples/clover_ext'
+        if dataset == 'irish':
+            return 'samples/irish'
+        elif dataset == 'irish_ext':
+            return 'samples/irish_ext'
         elif dataset == 'danish':
             return 'samples/danish'
         elif dataset == 'danish_ext':
