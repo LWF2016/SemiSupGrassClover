@@ -56,9 +56,18 @@ gt = torch.tensor(gt)
 histograms = torch.tensor(histograms)
 indexs = torch.tensor(indexs)
 ra = indexs[torch.randperm(len(indexs))]
-train = ra[:100]
-val = ra[100:]
-print(len(train), len(val))
+
+# 添加检查
+print(f"Total samples: {len(indexs)}")
+if len(indexs) < 2:
+    raise ValueError(f"Not enough samples. Found {len(indexs)}, need at least 2")
+
+# 使用比例而不是固定数量
+train_size = int(len(indexs) * 0.7)  # 70% 训练集
+train = ra[:train_size]
+val = ra[train_size:]
+
+print(f"Train samples: {len(train)}, Val samples: {len(val)}")
 
 with open("train.csv", 'w') as f_gt:
     writer = csv.writer(f_gt, delimiter=',')
