@@ -94,7 +94,7 @@ class CloverSegmentation(Dataset):
         elif self.split == 'val':
             sample = self.transform_val(sample)
             
-        sample['label'] = sample['label'].squeeze(0)
+        sample['label'] = torch.argmax(sample['label'], dim=-1)
         return sample
 
     def _make_img_gt_point_pair(self, index):
