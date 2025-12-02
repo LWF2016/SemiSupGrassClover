@@ -217,7 +217,7 @@ def main():
     parser.add_argument("--net", type=str, default="resnet18",
                         choices=["resnet18"],
                         help="net name")
-    parser.add_argument("--dataset", type=str, default="clover", choices=["clover", "clover_ext", "danish", "danish_ext"])
+    parser.add_argument("--dataset", type=str, default="irish", choices=["irish", "irish_ext", "danish", "danish_ext"])
     parser.add_argument("--epochs", type=int, default=100)
     parser.add_argument('--steps', type=int, default=[50,80], nargs='+', help='Epochs when to reduce lr')
     parser.add_argument("--lr", type=float, default=0.03)
