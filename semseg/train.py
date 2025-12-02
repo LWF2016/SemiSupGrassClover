@@ -178,38 +178,38 @@ class Trainer(object):
             # Add batch sample into evaluator
             self.evaluator.add_batch(target.cpu().numpy(), pred.cpu().numpy())
 
-        if self.args.train_height:
-            loss_height = torch.sqrt(loss_height/total)
-        else:
-            loss_height = 0
+            if self.args.train_height:
+                loss_height = torch.sqrt(loss_height/total)
+            else:
+                loss_height = 0
+                
+            # Fast test during the training
+            Acc = self.evaluator.Pixel_Accuracy()
+            Acc_class = self.evaluator.Pixel_Accuracy_Class()
+            mIoU = self.evaluator.Mean_Intersection_over_Union()
+            FWIoU = self.evaluator.Frequency_Weighted_Intersection_over_Union()
+            IoU = self.evaluator.Intersection_over_Union()
             
-        # Fast test during the training
-        Acc = self.evaluator.Pixel_Accuracy()
-        Acc_class = self.evaluator.Pixel_Accuracy_Class()
-        mIoU = self.evaluator.Mean_Intersection_over_Union()
-        FWIoU = self.evaluator.Frequency_Weighted_Intersection_over_Union()
-        IoU = self.evaluator.Intersection_over_Union()
-        
-        print(self.evaluator.confusion_matrix / self.evaluator.confusion_matrix.sum(axis=1))
-        print('Validation:')
-        print('[Epoch: %d, numImages: %5d]' % (epoch, i * self.args.batch_size + image.data.shape[0]))
-        print("Acc:{}, Acc_class:{}, mIoU:{}, fwIoU: {}; height {}".format(Acc, Acc_class, mIoU, FWIoU, loss_height))
-        print("Class IoU: {}".format(IoU))
-        print('Loss: %.3f' % test_loss)
+            print(self.evaluator.confusion_matrix / self.evaluator.confusion_matrix.sum(axis=1))
+            print('Validation:')
+            print('[Epoch: %d, numImages: %5d]' % (epoch, i * self.args.batch_size + image.data.shape[0]))
+            print("Acc:{}, Acc_class:{}, mIoU:{}, fwIoU: {}; height {}".format(Acc, Acc_class, mIoU, FWIoU, loss_height))
+            print("Class IoU: {}".format(IoU))
+            print('Loss: %.3f' % test_loss)
 
-        new_pred = mIoU
-        self.mioutab.append(new_pred)
-        if new_pred > self.best_pred:
-            self.best_weights = self.model.state_dict()#self.best_weights = self.model.module.state_dict()
-            self.best_pred = new_pred
-            self.best_height = loss_height
-            self.saver.save_checkpoint({
-                'epoch': epoch + 1,
-                'state_dict': self.model.state_dict(),#'state_dict': self.model.module.state_dict(),
-                'optimizer': self.optimizer.state_dict(),
-                'best_pred': self.best_pred,
-                'best_height': self.best_height
-            }, True, filename='checkpoint_best.pth.tar')
+            new_pred = mIoU
+            self.mioutab.append(new_pred)
+            if new_pred > self.best_pred:
+                self.best_weights = self.model.state_dict()#self.best_weights = self.model.module.state_dict()
+                self.best_pred = new_pred
+                self.best_height = loss_height
+                self.saver.save_checkpoint({
+                    'epoch': epoch + 1,
+                    'state_dict': self.model.state_dict(),#'state_dict': self.model.module.state_dict(),
+                    'optimizer': self.optimizer.state_dict(),
+                    'best_pred': self.best_pred,
+                    'best_height': self.best_height
+                }, True, filename='checkpoint_best.pth.tar')
 
     def predict(self, images):
         from torchvision import transforms
