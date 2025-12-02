@@ -108,12 +108,12 @@ class CloverSegmentation(Dataset):
         _target_array = np.load(self.categories[index])['arr_0']
         
         # 检查数组的形状和范围
-        print(f"DEBUG: _target_array shape={_target_array.shape}, dtype={_target_array.dtype}, min={_target_array.min()}, max={_target_array.max()}")
+        # print(f"DEBUG: _target_array shape={_target_array.shape}, dtype={_target_array.dtype}, min={_target_array.min()}, max={_target_array.max()}")
         
         # 如果是 one-hot 编码 (H, W, C)，需要转换为类别索引 (H, W)
         if len(_target_array.shape) == 3:
             _target_array = np.argmax(_target_array, axis=-1)
-            print(f"DEBUG: After argmax: shape={_target_array.shape}")
+            # print(f"DEBUG: After argmax: shape={_target_array.shape}")
         
         # 确保数据类型正确
         if _target_array.dtype != np.uint8:
