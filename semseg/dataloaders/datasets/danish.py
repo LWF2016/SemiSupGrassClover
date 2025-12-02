@@ -56,10 +56,10 @@ class CloverSegmentation(Dataset):
                 assert os.path.isfile(_gt)
                 
         if split == 'train':
-            self.images = self.images[:8]
+            self.images = self.images
             self.categories = self.categories[:len(self.images)]
         elif split == 'val':
-            self.images = self.images[8:10]
+            self.images = self.images
             self.categories = self.categories[:len(self.images)]
             
         #Normalization params
