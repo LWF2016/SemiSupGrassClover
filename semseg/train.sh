@@ -13,10 +13,10 @@
 # mv val.csv ../samples/irish/val.csv
 
 CUDA_VISIBLE_DEVICES=0 python train.py --backbone resnet34 --lr 0.007 --workers 12 --epochs 1 --gpu-ids 0 --eval-interval 1 --dataset danish --batch-size 4 --checkname resnet34danish --base-size 1024 --crop-size 1024 --loss-type ce --use-balanced-weights
-CUDA_VISIBLE_DEVICES=0 python train.py --backbone resnet34 --lr 0.007 --workers 12 --epochs 1 --gpu-ids 0 --eval-interval 1 --dataset danish --batch-size 4 --checkname resnet34danish --base-size 1024 --crop-size 1024 --loss-type ce --use-balanced-weights --resume "/kaggle/working/semseg/run/danish/resnet34irish/checkpoint_best.pth.tar" --predict "/kaggle/input/grassclover-dataset/biomass_data/train/images"
+CUDA_VISIBLE_DEVICES=0 python train.py --backbone resnet34 --lr 0.007 --workers 12 --epochs 1 --gpu-ids 0 --eval-interval 1 --dataset danish --batch-size 4 --checkname resnet34danish --base-size 1024 --crop-size 1024 --loss-type ce --use-balanced-weights --resume "/kaggle/working/semseg/run/danish/resnet34danish/checkpoint_best.pth.tar" --predict "/kaggle/input/grassclover-dataset/biomass_data/train/images"
 mv preds preds_danish_lab
 
-CUDA_VISIBLE_DEVICES=0 python train.py --backbone resnet34 --lr 0.007 --workers 12 --epochs 1 --gpu-ids 0 --eval-interval 1 --dataset danish --batch-size 4 --checkname resnet34danish --base-size 1024 --crop-size 1024 --loss-type ce --use-balanced-weights --resume "/kaggle/working/semseg/run/danish/resnet34irish/checkpoint_best.pth.tar" --predict "/kaggle/input/grassclover-dataset/biomass_data/train/images"
+CUDA_VISIBLE_DEVICES=0 python train.py --backbone resnet34 --lr 0.007 --workers 12 --epochs 1 --gpu-ids 0 --eval-interval 1 --dataset danish --batch-size 4 --checkname resnet34danish --base-size 1024 --crop-size 1024 --loss-type ce --use-balanced-weights --resume "/kaggle/working/semseg/run/danish/resnet34danish/checkpoint_best.pth.tar" --predict "/kaggle/input/grassclover-dataset/biomass_data/train/images"
 
 mv preds preds_danish_unlab
 
