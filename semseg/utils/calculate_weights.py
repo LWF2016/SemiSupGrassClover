@@ -7,8 +7,8 @@ def calculate_weigths_labels(dataset, dataloader, num_classes, syn=False):
     # Create an instance from the data loader
     z = np.zeros((num_classes,))
     # Initialize tqdm
-    tqdm_batch = tqdm(dataloader)
     print('Calculating classes weights')
+    tqdm_batch = tqdm(dataloader)
     for i, sample in enumerate(tqdm_batch):
         if syn:
             y = sample['label'][int(len(sample['label'])/2):]
