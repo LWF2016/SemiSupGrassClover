@@ -88,20 +88,40 @@ class CloverSegmentation(Dataset):
     def __getitem__(self, index):
         _img, _target = self._make_img_gt_point_pair(index)
 
-        sample = {'image': _img, 'label': _target, 'id':index}
+        sample = {'image': _img, 'label': _target, 'id': index}
         
         if self.split == "train":
             sample = self.transform_tr(sample)
         elif self.split == 'val':
             sample = self.transform_val(sample)
-            
-        sample['label'] = torch.argmax(sample['label'], dim=-1)
+        
+        # 移除或注释掉这行，因为 label 已经是正确的形状了
+        # sample['label'] = torch.argmax(sample['label'], dim=-1)
+        
         return sample
 
     def _make_img_gt_point_pair(self, index):
         _img = Image.open(self.images[index])
-        _img.draft('RGB',(_img.size[0]//2, _img.size[1]//2))
-        _target = np.load(self.categories[index])['arr_0']
+        _img.draft('RGB', (_img.size[0]//2, _img.size[1]//2))
+        
+        # 加载 npz 文件
+        _target_array = np.load(self.categories[index])['arr_0']
+        
+        # 检查数组的形状和范围
+        print(f"DEBUG: _target_array shape={_target_array.shape}, dtype={_target_array.dtype}, min={_target_array.min()}, max={_target_array.max()}")
+        
+        # 如果是 one-hot 编码 (H, W, C)，需要转换为类别索引 (H, W)
+        if len(_target_array.shape) == 3:
+            _target_array = np.argmax(_target_array, axis=-1)
+            print(f"DEBUG: After argmax: shape={_target_array.shape}")
+        
+        # 确保数据类型正确
+        if _target_array.dtype != np.uint8:
+            _target_array = _target_array.astype(np.uint8)
+        
+        # 转换为 PIL Image，使用 'L' 模式表示单通道灰度图
+        _target = Image.fromarray(_target_array, mode='L')
+        
         return _img, _target
 
     def transform_tr(self, sample):
