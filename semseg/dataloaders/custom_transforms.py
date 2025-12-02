@@ -333,9 +333,9 @@ class FixedResize(object):
         else:
             shape = (self.size, int(self.size/r))
 
-        img = img.resize(shape, Image.BILINEAR)
-        mask = mask.resize(shape, Image.NEAREST)
-        
+        img = img.resize(shape, resample=Image.BILINEAR)
+        print('maskshape:',shape)
+        mask = mask.resize(shape, resample=Image.NEAREST)
         sample["image"] = img
         sample["label"] = mask
         
