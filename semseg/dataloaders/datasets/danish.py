@@ -7,6 +7,7 @@ from torchvision import transforms
 from dataloaders import custom_transforms as tr
 from utils.visualization import UnNormalize
 from PIL import Image
+import torch
 
 class CloverSegmentation(Dataset):
     """
