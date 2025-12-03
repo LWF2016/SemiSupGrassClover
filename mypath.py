@@ -2,7 +2,7 @@ class Path(object):
     @staticmethod
     def db_root_dir(dataset):
         if dataset == 'irish':
-            return 'samples/irish'
+            return '/kaggle/input/irish-grass-clover/camera'
         elif dataset == 'irish_ext':
             return 'samples/irish_ext'
         elif dataset == 'danish':
