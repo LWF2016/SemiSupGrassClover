@@ -80,7 +80,7 @@ class ResNet(nn.Module):
         
         self.pool = nn.Sequential(*[nn.BatchNorm2d(512), nn.ReLU(), nn.AdaptiveAvgPool2d(1)])
 
-        if "clover" in self.dataset:
+        if "irish" in self.dataset:
             self.linear_biomass = nn.Linear(512*block.expansion, 3)
             self.linear_herbage = nn.Linear(512*block.expansion, 1)
             self.linear_height = nn.Linear(512*block.expansion, 1)
@@ -107,7 +107,7 @@ class ResNet(nn.Module):
         out = self.pool(out)
         f = out.view(out.size(0), -1)
         
-        if "clover" in self.dataset:
+        if "irish" in self.dataset:
             c = torch.cat((self.linear_herbage(f), self.linear_biomass(f)), dim=1)
         elif "danish" in self.dataset:
             c = self.linear_biomass(f)
