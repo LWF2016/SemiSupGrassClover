@@ -35,7 +35,7 @@ class Trainer(object):
         self.train_loader, self.val_loader = make_data_loader(args, **self.kwargs)
         
         #Herbage mass normalization
-        if 'clover' in self.args.dataset:
+        if 'irish' in self.args.dataset:
             self.ratio = 3000 #(self.train_loader.dataset.train_labels[:, 0].max() - self.train_loader.dataset.train_labels[:, 0].min()) # 3000 works better
             self.train_loader.dataset.train_labels[:, 0] = self.train_loader.dataset.train_labels[:, 0] / self.ratio #between 0 & 1
             self.val_loader.dataset.train_labels[:, 0] = self.val_loader.dataset.train_labels[:, 0] / self.ratio #between 0 & 1
@@ -63,7 +63,7 @@ class Trainer(object):
             output = self.model(img)
             assert not torch.isnan(output).any()
             
-            if "clover" in self.args.dataset:
+            if "irish" in self.args.dataset:
                 output = torch.cat((torch.sigmoid(output[:,0]).unsqueeze(-1), F.softmax(output[:,1:], dim=1)), dim=1)
             elif "danish" in self.args.dataset:
                 output = F.softmax(output, dim=1)
@@ -108,18 +108,18 @@ class Trainer(object):
                 image, target, ids = sample["image"].cuda(), sample["target"].cuda(), sample["index"]
                 output = self.model(image)
                 
-                if "clover" in self.args.dataset:
+                if "irish" in self.args.dataset:
                     output = torch.cat((torch.sigmoid(output[:,0]).unsqueeze(-1), F.softmax(output[:,1:], dim=1)), dim=1) #Herbage mass, Grass, Clover, Weeds
                 elif "danish" in self.args.dataset:
                     output_c = F.softmax(output, dim=1)
-                    output = torch.cat((output_c[:, 0].unsqueeze(-1), (output_c[:, 1] + output_c[:, 2]).unsqueeze(-1), output_c[:, 1:]), dim=1) #Grass, Clover, White, Red, Weeds
+                    output = torch.cat((output_c[:, 0].unsqueeze(-1), (output_c[:, 1] + output_c[:, 2]).unsqueeze(-1), output_c[:, 1:]), dim=1) #Grass, irish, White, Red, Weeds
                     
                 targets[ids] = target.cpu()
                 
                 loss = self.criterion_nored(output, target)
                 mae = self.mae(output, target)
                 
-                if "clover" in self.args.dataset:
+                if "irish" in self.args.dataset:
                     herbage_rmse += loss[:, 0].sum(dim=0).cpu()
                     biomass_rmse += loss[:, 1:].sum(dim=0).cpu()
                     loss[:, 0] = loss[:, 0] #/ (output[:, 0] ** 2) #Uncomment for the relative herbage mass error
@@ -129,7 +129,7 @@ class Trainer(object):
 
                 maes += mae.sum(dim=0).cpu()
                 acc += loss.sum(dim=0).cpu()
-                if "clover" in self.args.dataset:
+                if "irish" in self.args.dataset:
                     #Per class herbage mass error (RMSE or MAE)
                     mass += ((self.ratio * output[:,0].unsqueeze(-1) * output[:,1:4] - self.ratio * target[:,0].unsqueeze(-1) * target[:,1:4])**2).sum(dim=0).cpu()
                     #mass += torch.absolute((self.ratio * output[:,0].unsqueeze(-1) * output[:,1:4] - self.ratio * target[:,0].unsqueeze(-1) * target[:,1:4])).sum(dim=0).cpu()
@@ -142,7 +142,7 @@ class Trainer(object):
         final_acc = torch.sqrt(acc/total)
         final_mae = maes/total
         #Average the errors
-        if "clover" in self.args.dataset:
+        if "irish" in self.args.dataset:
             final_mass = torch.sqrt(mass / total)
         else:
             final_mass = torch.tensor([0,0], dtype=torch.float)
@@ -152,7 +152,7 @@ class Trainer(object):
         herbage_rmse, biomass_rmse = torch.sqrt(herbage_rmse/total), torch.sqrt(biomass_rmse/total)
 
         #Choose the early stopping metric
-        if "clover" in self.args.dataset:
+        if "irish" in self.args.dataset:
             metric = final_mass.mean()
         elif "danish" in self.args.dataset:
             metric = torch.sqrt(rmses / total).mean()
@@ -171,7 +171,7 @@ class Trainer(object):
         print("Detailed errors RMSE", final_acc, torch.sqrt(rmses/total).mean())
         print("MAE", final_mae)
         print("MASS_RMSE", final_mass)
-        if "clover" in self.args.dataset:
+        if "irish" in self.args.dataset:
             print("Herbage_RMSE", herbage_rmse*self.ratio)
         return final_acc
     
@@ -202,7 +202,7 @@ class Trainer(object):
                     output_c = F.softmax(output, dim=1)
                     output = torch.cat((output_c[:, 0].unsqueeze(-1), (output_c[:, 1] + output_c[:, 2]).unsqueeze(-1), output_c[:, 1:]), dim=1) #Grass, Clover, White, Red, Weeds
                     output = output.view(-1).tolist()
-                elif "clover" in self.args.dataset:
+                elif "irish" in self.args.dataset:
                     output = torch.cat((torch.sigmoid(output[:,0]).unsqueeze(-1), F.softmax(output[:,1:], dim=1)), dim=1)
             print(i, output)
             if "danish" in self.args.dataset:
